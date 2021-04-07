@@ -16,7 +16,7 @@ namespace X_Forms
             InitializeComponent();
 
             //Neuzuweisung einer UI-Property über die x:Name-Property des Steuerelements
-            Lbl_Output.Text = "Hallo Xamarin";
+            Lbl_Main.Text = "Hallo Xamarin";
         }
 
         private void Btn_KlickMich_Clicked(object sender, EventArgs e)
