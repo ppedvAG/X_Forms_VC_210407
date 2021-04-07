@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--vgl. CodeBehind-->
+
+<!--Jede XAML-Datei hat einen Root-Container, welcher die Art der UI bestimmt. Dieser muss mit der Mutterklasse im CodeBehind übereinstimmen-->
+<!--Im Root-Container werden die in diesem Dokument benutzten Namespaces definiert, sowie der Verweis auf die anhängige Klasse (CodeBehind)-->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="X_Forms.MainPage">
+
+    <!--Jeder Container hat eine Resource-Property, in welcher Ressourcen (Objekte, Styles, Converter, ...) für diesen 
+    Container bereit gestellt werden können.-->
+    <ContentPage.Resources>
+        <!--Über das Präfix (Zeichen vor dem Doppelpunkt) wird der entsprechende Namespace angesteuert-->
+        <!--Jede Ressource (außer globalen Styles) benötigen einen Key, über welche diese angersteuert werden können.-->
+        <x:String x:Key="BtnString">Hallo, ich bin eine Ressource</x:String>
+    </ContentPage.Resources>
+
+    <!--Properties können direkt im einleitenden Tag mittels der Attribute gesetzt werden.-->
+    <!--Vertical und HorizontalObptions definieren das Anzeige-Verhalten des UI-Elements in Bezug auf umgebende Objekte.-->
+    <!--Padding definiert einen Abstand des UI-Elements zu inneren Elementen.-->
+    <!--Container, welche die Children-Property besitzen können mehrere Elemente beinhalten-->
+    <StackLayout HorizontalOptions="FillAndExpand"
+                 VerticalOptions="FillAndExpand"
+                 Orientation="Vertical"
+                 BackgroundColor="LightBlue"
+                 Padding="5"
+                 Spacing="5">
+
+        <!--Einfache Property-Belegungen werden in Attribut-Form direkt in den Start-Tag geschrieben-->
+        <Label x:Name="Lbl_Main"
+               FontSize="20"
+               TextColor="White"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="Start"
+               HorizontalTextAlignment="Center">
+
+            <!--Jedes UI-Element hat eien Standart-Property, auf die direkt zugegriffen werden kann (meißt Text, Children, Content)-->
+            Hallo, ich bin ein String
+
+            <!--Wenn Properties mit komplexeren Elementen gefüllt werden sollen, können diese ausgelagert werden.-->
+            <Label.BackgroundColor>
+               Red
+            </Label.BackgroundColor>
+
+        </Label>
+        <!--Dieser Button nimmt den globalen Button-Style an (vgl. ResDict.xaml)-->
+        <!--In XAML definierte Events benötigen einen EventHandler im CodeBehind (vgl. CodeBehind)-->
+        <Button x:Name="Btn_KlickMich"
+                Text="Klick mich, ich bin ein Button"
+                Clicked="Btn_KlickMich_Clicked"/>
+
+        <!--Grafische Ressourcen müssen in den einzelnen OS-Projekten abgelegt sein (z.B. Android/Resources/drawable)-->
+        <ImageButton x:Name="IBtn_Beispiel" 
+                     Source="test.png"
+                     WidthRequest="50"
+                     BackgroundColor="Transparent"
+                     Clicked="IBtn_Beispiel_Clicked"/>
+         
+        <!--Die Placeholder-Property des Entries wird im Textfeld angezeigt, solange der Benutzer noch keinen Eintrag getätigt hat-->
+        <!--Die Keyboard-Property definiert das angezeigte Eingabefeld-->
+        <Entry x:Name="Ent_Vorname"
+               Placeholder="Vorname"
+               Keyboard="Text"/>
+        <Entry x:Name="Ent_Nachname"
+               Placeholder="Nachname"
+               Keyboard="Text"/>
+
+        <!--Bsp eines Pickers (Äquivalent zu ComboBox)-->
+        <Picker x:Name="Pkr_Monkeys" Title="Monkeys">
+            <Picker.Items>
+                <x:String>Baboon</x:String>
+                <x:String>Capuchin Monkey</x:String>
+                <x:String>Blue Monkey</x:String>
+                <x:String>Squirrel Monkey</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <!--Dieser Button nimmt einen explizieten Button-Style an (vgl. RessourceDict.xaml)-->
+        <!--Mittels einer StaticResource-Bindung kann auf in übergeordneten Container definierte Ressourcen zugegriffen werden-->
+        <Button x:Name="BtnResource"
+                Text="{StaticResource BtnString}"
+                FontSize="{StaticResource GlobalFontSize}"
+                Style="{StaticResource BtnStyle}"
+                TextColor="Yellow"/>
+
+        <!--An eine Ressource können beliebig viele Properties gehängt werden-->
+        <Label Text="{StaticResource BtnString}"/>
+
+
+
+
+    </StackLayout>
+
+</ContentPage>
