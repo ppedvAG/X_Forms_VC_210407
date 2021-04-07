@@ -10,7 +10,7 @@ namespace X_Forms
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new Layouts.StackLayoutBsp();
         }
 
         protected override void OnStart()

@@ -19,6 +19,7 @@
         <local:FactorConverter x:Key="factorConverter"/>
     </ContentPage.Resources>
 
+    <!--Ein ScrollView ermöglicht dem User das Scrollen-->
     <ScrollView>
 
         <!--Properties können direkt im einleitenden Tag mittels der Attribute gesetzt werden.-->
@@ -92,11 +93,15 @@
             <!--An eine Ressource können beliebig viele Properties gehängt werden-->
             <Label Text="{StaticResource BtnString}"/>
 
+            <!--Bindungen-->
+            <!--Mittels Bindungen können Properties von UI-Elementen miteinander verknüpft werden.-->
             <StackLayout Orientation="Horizontal">
                 <Slider x:Name="Sdr_Binding_01"
                     Minimum="0"
                     Maximum="100"
                     WidthRequest="300"/>
+                <!--Mittels einer Markup-Extension ({}-Klammern) kann eine Property an eine andere Property gebunden werden. Die Property,
+                welche die Markup-Extension beinhaltet, gilt als Target-Property-->
                 <Label Text="{Binding Source={x:Reference Sdr_Binding_01}, Path=Value, Mode=OneWay, StringFormat='Wert: {0}'}"/>
             </StackLayout>
 
@@ -105,31 +110,45 @@
                     Minimum="0"
                     Maximum="100"
                     WidthRequest="300"/>
-
+                <!--Soll der Wert nicht unverandert übertragen werden oder sind die Property-Typen unterschiedlich muss ein Converter
+                zwischengeschaltet werden (vgl. FactorConverter.cs)-->
                 <Label Text="{Binding Source={x:Reference Sdr_Binding_02}, Path=Value, Mode=OneWay, StringFormat='Wert: {0}',
                             ConverterParameter=2.5,
                             Converter={StaticResource factorConverter}}"/>
             </StackLayout>
 
+            <!--DataBinding-->
             <StackLayout x:Name="StL_DataBinding">
 
+                <!--Der BindingContext definiert den DatenHintergrund eines Controls/Containers/Page. Kurzbindungen innerhalb dieses
+                Bereichs zielen immer auf dieses Objekt. Hier wurde XAML-seitig ein Person-Objekt definiert-->
                 <StackLayout.BindingContext>
                     <local:Person Vorname="Rainer" Nachname="Zufall"/>
                 </StackLayout.BindingContext>
 
+                <!--Bsp für Kurzbindungen an den BindingContext. Codeseitige Veränderungen müssen durch das Interface 
+                INotifyPropertyChanged kommuniziert werden (vgl. Person.cs)-->
                 <Label Text="{Binding Vorname}"/>
                 <Entry Text="{Binding Nachname}"/>
 
+                <!--Button zur Codeseitigen Veränderung der Person-Properties-->
                 <Button Text="Namen ändern" x:Name="Btn_Name" Clicked="Btn_Name_Clicked"/>
             </StackLayout>
 
+            <!--Die Property 'ItemSource' verweist auf die Quelle der Items für die Liste.
+            Hier wurde sie per Kurzbindung an die Property 'NamenListe' des BindingContextes 
+            der Page gebunden (vgl. CodeBehind-Konstruktor)-->
             <ListView x:Name="LstV_Namen"
                   HeightRequest="150"
                   ItemsSource="{Binding Personenliste}">
                 <ListView.ItemTemplate>
+                    <!--Mittels DataTemplates kann das Erscheinen von einzelnen Elementen von ItemControls (hier ListView) defniert werden.
+                    DataTemplates müssen immer ein UI-Element vom Typ Cell beinhalten.-->
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="2">
+                                <!--Innerhalb von DataTemplates findet immer ein DataBinding an die Elemente der ItemSource statt (vgl. CodeBehind).
+                                Dadurch finden Kurzbindungen an die Properties der Listenelemente statt.-->
                                 <Label Text="{Binding Vorname}"/>
                                 <Label Text="{Binding Nachname}"/>
                             </StackLayout>
