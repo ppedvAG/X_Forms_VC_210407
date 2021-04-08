@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace X_Forms
@@ -30,6 +31,8 @@ namespace X_Forms
             //Durch Setzen des BindingContextes nehmen Kurzbindungen aus dem XAML-Code automatisch Bezug auf die Properties
             //des im BindingContext gesetzten Objekts
             this.BindingContext = this;
+
+            Lbl_Battery.Text = Battery.State.ToString() + " | Level: " + Battery.ChargeLevel * 100 + "%";
         }
 
         private void Btn_KlickMich_Clicked(object sender, EventArgs e)
@@ -54,6 +57,52 @@ namespace X_Forms
         {
             //Änderung einer Property des BindingContexts des StackLayouts (INotifyPropertyChanged informiert GUI über Veränderung (vgl. Person.cs))
             (StL_DataBinding.BindingContext as Person).Vorname = "Martin";
+        }
+
+        private void Btn_Push_Clicked(object sender, EventArgs e)
+        {
+            //Aufruf einer neuen Seite innerhalb der aktuellen NavigationPage 
+            Navigation.PushAsync(new Layouts.GridLayoutBsp());
+        }
+
+        private void Btn_PushModal_Clicked(object sender, EventArgs e)
+        {
+            //Aufruf einer neuen Seite innerhalb der aktuellen NavigationPage, welche aber keinen 'Zurück'-Button anzeigt
+            Navigation.PushModalAsync(new Layouts.AbsoluteLayoutBsp());
+        }
+
+        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            Personenliste.Clear();
+        }
+
+        private async void MenuItem_Clicked(object sender, EventArgs e)
+        {
+            //Personenliste.Remove((LstV_Namen.SelectedItem as Person));
+
+
+            //Anzeige einer 'MessageBox' und Abfrage der User-Antwort
+            bool result = await DisplayAlert("Löschung", "Soll diese Person wirklich gelöscht werden?", "Ja", "Nein");
+
+            if (result)
+            {
+                //Löschen eines Listeneintrags
+                Person person = (sender as MenuItem).CommandParameter as Person;
+
+                Personenliste.Remove(person);
+            }
+        }
+
+        private void Btn_Tabbed_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new NavigationBsps.TabbedPageBsp());
+        }
+
+        private async void Btn_Youtube_Clicked(object sender, EventArgs e)
+        {
+            //Öffnen der Youtube-App über die Xamarin-Essentials mit Übergabe des Package-Namens
+            if (await Launcher.CanOpenAsync("vnd.youtube://"))
+               await Launcher.OpenAsync("vnd.youtube://rLKnqR9Oqh8");
         }
     }
 }

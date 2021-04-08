@@ -3,7 +3,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="X_Forms.Uebungen.U_GridL"
-             BackgroundColor="DarkSlateGray">
+             BackgroundColor="DarkSlateGray"
+             Title="GridUebung">
 
     <ContentPage.Resources>
         <Style TargetType="Button">

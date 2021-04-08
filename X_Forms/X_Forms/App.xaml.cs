@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,20 +14,31 @@ namespace X_Forms
             InitializeComponent();
 
             //Zuweisung der MainPage-Property zu einer Page
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
+
+            //Zuweisung der MainPage - Property zu einer NavigationPage(ermöglicht Stack - Navigation) mit Angabe der Startpage.
+            //MainPage = new NavigationPage(new MainPage());
+
+            //Zuweisung der FlyoutPage als Hauptnavigation zu der MainPage-Property
+            MainPage = new NavigationBsps.Flyout.FlyoutPageMain();
         }
 
         //Methoden, welche zu bestimmten globalen Events ausgeführt werden (Start, Unterbrechen der App [Sleep], Wiederaktivierung der App [Resume])
         protected override void OnStart()
         {
+            //Aufruf der Essentials.Preferences-Klasse zum Speichern und Abrufen von App-Settings
+            if (Preferences.ContainsKey("timestamp"))
+                MainPage.DisplayAlert("Gespeicherte Zeit", Preferences.Get("timestamp", DateTime.Now).ToString(), "ok");
         }
 
         protected override void OnSleep()
         {
+            Preferences.Set("timestamp", DateTime.Now);
         }
 
         protected override void OnResume()
         {
+            MainPage.DisplayAlert("Geschlafene Zeit", DateTime.Now.Subtract(Preferences.Get("timestamp", DateTime.Now)).ToString(), "ok");
         }
     }
 }

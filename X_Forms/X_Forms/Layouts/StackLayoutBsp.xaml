@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="X_Forms.Layouts.StackLayoutBsp">
+             x:Class="X_Forms.Layouts.StackLayoutBsp"
+             Title="StackLayoutBsp">
 
     <!--StackLayouts ordnen ihre Children-Elemente gemäß ihrer Orientation-Property unter- oder nebeneinander an.
         Spacing gibt den Abstand zwischen den einzelnen Elementen an-->

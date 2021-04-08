@@ -7,7 +7,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="X_Forms.MainPage"
              
-             xmlns:local="clr-namespace:X_Forms">
+             xmlns:local="clr-namespace:X_Forms"
+             
+             Title="MAIN">
 
     <!--Jeder Container hat eine Resource-Property, in welcher Ressourcen (Objekte, Styles, Converter, ...) für diesen 
     Container bereit gestellt werden können.-->
@@ -35,7 +37,6 @@
 
             <!--Einfache Property-Belegungen werden in Attribut-Form direkt in den Start-Tag geschrieben-->
             <Label x:Name="Lbl_Main"
-               FontSize="20"
                TextColor="White"
                HorizontalOptions="FillAndExpand"
                VerticalOptions="Start"
@@ -46,8 +47,13 @@
 
                 <!--Wenn Properties mit komplexeren Elementen gefüllt werden sollen, können diese ausgelagert werden.-->
                 <Label.BackgroundColor>
-                    Red
+                    <!--Unterschiedliche Werte auf verschiedenen OS in derselben Property-->
+                    <OnPlatform x:TypeArguments="Color" Android="Yellow" iOS="Orange" Default="Green"/>
                 </Label.BackgroundColor>
+                <Label.FontSize>
+                    <!--Unterschiedliche Werte auf verschiedenen Geräten in derselben Property-->
+                    <OnIdiom x:TypeArguments="x:Double" Phone="20.0" TV="40.0"/>
+                </Label.FontSize>
 
             </Label>
             <!--Dieser Button nimmt den globalen Button-Style an (vgl. ResDict.xaml)-->
@@ -152,15 +158,40 @@
                                 <Label Text="{Binding Vorname}"/>
                                 <Label Text="{Binding Nachname}"/>
                             </StackLayout>
+
+                            <!--ContextActions werden angezeigt, wenn der Benutzer (unter Android) länger auf eine Objekt 'touched'-->
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Löschen" Clicked="MenuItem_Clicked" CommandParameter="{Binding}"/>
+                            </ViewCell.ContextActions>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-        <Button Text="Hallo"/>
+            <!--Verweis auf Beispiel-Layouts und -Navigation (vgl. CodeBehind, NavigationBsp und Layouts)-->
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="Btn_Push" Text="Grid"
+                        Clicked="Btn_Push_Clicked"/>
+                <Button x:Name="Btn_PushModal" Text="Absolute"
+                        Clicked="Btn_PushModal_Clicked"/>
+                <Button x:Name="Btn_Tabbed"
+                        Text="Tabbed"
+                        Clicked="Btn_Tabbed_Clicked"/>
+            </StackLayout>
+
+            <!--Label zum Anzeigen des Batterie-Status mittels Xamarin.Essentials (vgl. CodeBehind)-->
+            <Label x:Name="Lbl_Battery"/>
             
+            <!--Button zum Öffnen der Youtube-App-->
+            <Button x:Name="Btn_Youtube" Text="Öffne YouTube" Clicked="Btn_Youtube_Clicked"/>
+
         </StackLayout>
 
     </ScrollView>
+
+    <!--Wird die ContentPage in einer Navigation Page angezeigt, hat diese Zugriff auf die ToolBar-->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Liste löschen" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
 
 </ContentPage>
