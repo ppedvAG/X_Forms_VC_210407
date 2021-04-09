@@ -38,6 +38,9 @@
     <EmbeddedResource Update="Layouts\StackLayoutBsp.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="MVVMBsp\View\MainView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="NavigationBsps\Flyout\FlyoutPageMain.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

@@ -10,6 +10,8 @@
              
              xmlns:pdb="clr-namespace:X_Forms.PersonenDb.Nav"
              
+             xmlns:mvvm="clr-namespace:X_Forms.MVVMBsp.View"
+             
              Padding="0,40,0,0"
              Title="X_Forms">
     <StackLayout>
@@ -23,6 +25,7 @@
                     <local:FlyoutPageItem Title="GridLayout" IconSource="test.png" TargetType="{x:Type ub:U_GridL}" />
                     <local:FlyoutPageItem Title="StackLayout" IconSource="test.png" TargetType="{x:Type ub:U_StackL}" />
                     <local:FlyoutPageItem Title="PersonenDb" IconSource="test.png" TargetType="{x:Type pdb:MDP}" />
+                    <local:FlyoutPageItem Title="MVVMBsp" IconSource="test.png" TargetType="{x:Type mvvm:MainView}" />
                 </x:Array>
             </ListView.ItemsSource>
             <ListView.ItemTemplate>
