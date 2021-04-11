@@ -22,6 +22,9 @@ namespace X_Forms
         //Konstruktor
         public MainPage()
         {
+            //Setzten der Ressourcensprache -> Bestimmt, welche resx-Bibliothek für die Lokalisierung verwendet wird
+            Properties.Resources.Culture = new System.Globalization.CultureInfo("de");
+
             //Initialisierung der UI (Xaml-Datei). Sollte immer erste Aktion des Konstruktors sein
             InitializeComponent();
 
@@ -32,6 +35,7 @@ namespace X_Forms
             //des im BindingContext gesetzten Objekts
             this.BindingContext = this;
 
+            //Zugriff auf Xamarin.Essentials.Battery zur Anzeige des Batteriestandes (benötigt BatteryState-Permission)
             Lbl_Battery.Text = Battery.State.ToString() + " | Level: " + Battery.ChargeLevel * 100 + "%";
         }
 
@@ -49,7 +53,7 @@ namespace X_Forms
             bool erg = await DisplayAlert("Begrüßung", "Geht es dir gut?", "Ja", "Nein");
 
             if (erg)
-                //Neuzuweisung der Textproperty des Labeld mit dem Ausgewählten Element des Pickers
+                //Neuzuweisung der Textproperty des Labels mit dem Ausgewählten Element des Pickers
                 Lbl_Main.Text = Pkr_Monkeys.SelectedItem?.ToString();
         }
 
@@ -103,6 +107,19 @@ namespace X_Forms
             //Öffnen der Youtube-App über die Xamarin-Essentials mit Übergabe des Package-Namens
             if (await Launcher.CanOpenAsync("vnd.youtube://"))
                await Launcher.OpenAsync("vnd.youtube://rLKnqR9Oqh8");
+        }
+
+        //Bsp für Verwendung des MessagingCenters
+        private void Btn_MC_Clicked(object sender, EventArgs e)
+        {
+            //Instanzieren des Empängerobjekts
+            Page page = new Pg_Subscriber();
+
+            //Senden der Nachricht mit Angabe des Senders, des Titels und des Inhalts
+            MessagingCenter.Send(this, "Gesendeter Text", Pkr_Monkeys.SelectedItem.ToString());
+
+            //Öffnen der Bsp-Seite
+            Navigation.PushAsync(page);
         }
     }
 }

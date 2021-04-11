@@ -8,6 +8,9 @@
              
              x:Name="Pg_Main">
 
+    <!--Im View-Teil von MVVM-Projekten werden die Fenster per XAML definiert. Diese Klassen dürfen keinen Code-Behind
+    besitzen. Diese Aufgabe wird von dem entsprechenden ViewModel übernommen, welches als BindingContext des Views gesetzt
+    wird. Dies geschieht hier, im ersten Fenster des Programms, inner halb des XAML-Codes.-->
     <ContentPage.BindingContext>
         <vm:MainViewModel ContextPage="{x:Reference Pg_Main}"/>
     </ContentPage.BindingContext>
@@ -18,13 +21,18 @@
 
     <StackLayout Orientation="Vertical"
                  Padding="10">
+        <!--Die Eigenschaften werden über Kurzbindungen an den BindingContext (das ViewModel) gebunden.-->
         <Entry x:Name="Ent_Name" Placeholder="Name"
                Text="{Binding NeuerName}"/>
         <Entry x:Name="Ent_Alter" Placeholder="Alter"
                Keyboard="Numeric"
                Text="{Binding NeuesAlter}"/>
+        <!--Commands erstezen die Events. CommandParameter können beliebige zusätzliche Infos enthalten,
+        welche die Commands für ihre Ausführung benötigen-->
         <Button x:Name="Btn_AddPerson" Text="Hinzufügen"
                 Command="{Binding HinzufuegenCmd}">
+            <!--Mittels der CommandParameter-Eigenschaft kann ein weiteres Objekt an das Command gesendet werden.
+            Hier wird ein Multibinding und ein Converter verwendet um mehrere Objekte zu übergeben.-->
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource validateEntriesConv}">
                     <Binding Source="{x:Reference Ent_Name}" Path="Text"/>

@@ -9,6 +9,8 @@
              
              xmlns:local="clr-namespace:X_Forms"
              
+             xmlns:prop="clr-namespace:X_Forms.Properties"
+             
              Title="MAIN">
 
     <!--Jeder Container hat eine Resource-Property, in welcher Ressourcen (Objekte, Styles, Converter, ...) für diesen 
@@ -181,10 +183,15 @@
 
             <!--Label zum Anzeigen des Batterie-Status mittels Xamarin.Essentials (vgl. CodeBehind)-->
             <Label x:Name="Lbl_Battery"/>
-            
-            <!--Button zum Öffnen der Youtube-App-->
-            <Button x:Name="Btn_Youtube" Text="Öffne YouTube" Clicked="Btn_Youtube_Clicked"/>
 
+            <!--Beispiele für lokalisierte Beschriftungen (vgl. CodeBehind sowie Resource.resx und Resource.de.resx)-->
+            <!--Mittels der x:Static-Bindung können Properties an resx-Files gebunden werden-->
+            <StackLayout Orientation="Horizontal">
+                <!--Button zum Öffnen der Youtube-App-->
+                <Button x:Name="Btn_Youtube" Text="{x:Static prop:Resources.Btn_Youtube_Text}" Clicked="Btn_Youtube_Clicked"/>
+                <!--Button zum Senden einer MC-Nachricht (vgl. CodeBehind und Pg_Subscriber.cs)-->
+                <Button x:Name="Btn_McSender" Text="{x:Static prop:Resources.Btn_McSubsciber_Text}" Clicked="Btn_McSender_Clicked"/>
+            </StackLayout>
         </StackLayout>
 
     </ScrollView>
